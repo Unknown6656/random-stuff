@@ -54,14 +54,23 @@ ff02::2 ip6-allrouters
 
 # 4CHAN AD BLOCK
 
+
+::0 www.utraffic.engine.adglare.net
 ::0 www.utraffic.cdn.adglare.net
 ::0 www.trends.revcontent.com
 ::0 www.cdn.revcontent.com
 ::0 www.img.revcontent.com
+::0 www.engine.adglare.net
+::0 www.revcontent.com
+::0 www.adglare.net
+::0 utraffic.engine.adglare.net
 ::0 utraffic.cdn.adglare.net
 ::0 trends.revcontent.com
 ::0 cdn.revcontent.com
 ::0 img.revcontent.com
+::0 engine.adglare.net
+::0 revcontent.com
+::0 adglare.net
 
 
 # AD-BLOCKS
