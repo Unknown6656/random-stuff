@@ -76,8 +76,8 @@ source ~/git-prompt.sh
 PS1PREFIX="${PS1T}\[\e[96m\]"
 PS1SUFFIX="\[\e[0;34m\]λ \[\e[0m\]"
 
-# export PS1="${PS1PREFIX}$(__posh_git_echo)${PS1SUFFIX}"
-export PROMPT_COMMAND='__posh_git_ps1 "$PS1PREFIX" "$PS1SUFFIX";'
+export PS1="${PS1PREFIX}${PS1SUFFIX}"
+# export PROMPT_COMMAND='__posh_git_ps1 "$PS1PREFIX" "$PS1SUFFIX";'
 
 $PROMPT_COMMAND
 
@@ -114,10 +114,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias apt-upgrade='apt-get clean; apt-get update; apt-get dist-upgrade'
+alias apt-upgrade='apt-get clean; apt-get update; apt list --upgradable; apt-get dist-upgrade'
 alias cp='rsync -ahv --progress'
 alias rm='rm -i'
 alias gnome-restart='service gdm3 stop; service gdm3 start'
-alias vlc-ascii='vlc --enable-caca --enable-aa'
+# alias vlc-ascii='vlc --enable-caca --enable-aa'
+alias vlc-ascii='vlc -V caca'
 alias find-links='find . -type l -ls'
 alias explorer='nautilus'
+alias dump-tcp='tcpdump -s 0 -U -n -w - -i eno1 not port 22'
+
+function fhash() {
+    pee crc32 md5sum sha1sum sha224sum sha256sum sha384sum sha512sum < "$1"
+}
