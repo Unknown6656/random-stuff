@@ -124,6 +124,7 @@ alias find-links='find . -type l -ls'
 alias explorer='nautilus'
 alias dump-tcp='tcpdump -s 0 -U -n -w - -i eno1 not port 22'
 alias .net='dotnet'
+alias temp='vcgencmd measure_temp'
 
 function fhash() {
     pee crc32 md5sum sha1sum sha224sum sha256sum sha384sum sha512sum < "$1"
