@@ -65,13 +65,19 @@ unset color_prompt force_color_prompt
 PS1PREFIX="${PS1T}\[\e[96m\]"
 PS1SUFFIX="\[\e[0;34m\]λ \[\e[0m\]"
 
-if [ -f ~/git-prompt.sh ]; then
-    source /etc/bash_completion.d/git-prompt
-    source ~/git-prompt.sh
-fi
+source /etc/bash_completion.d/git-prompt
 
-if typeset -f __git_ps1 > /dev/null; then
-    export PS1="${PS1PREFIX}$(__git_ps1 " (%s)")${PS1SUFFIX}"
+if [ -f ~/git-prompt.sh ]; then
+    . ~/git-prompt.sh
+
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWCOLORHINTS=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    export GIT_PS1_SHOWUPSTREAM="auto"
+
+    PROMPT_COMMAND='__posh_git_ps1 "'$PS1PREFIX'" "'$PS1SUFFIX'"'
+    $PROMPT_COMMAND
 else
     export PS1="${PS1PREFIX}${PS1SUFFIX}"
 fi
