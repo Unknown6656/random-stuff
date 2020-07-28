@@ -3,6 +3,11 @@ case $- in
       *) return;;
 esac
 
+function function_exists() {
+    declare -f -F $1 > /dev/null
+    return $?
+}
+
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
@@ -57,17 +62,18 @@ unset color_prompt force_color_prompt
 #    ;;
 #esac
 
-if [ -f ~/git-prompt.sh ]; then
-   source ~/git-prompt.sh
-fi
-
 PS1PREFIX="${PS1T}\[\e[96m\]"
 PS1SUFFIX="\[\e[0;34m\]λ \[\e[0m\]"
 
-export PS1="${PS1PREFIX}${PS1SUFFIX}"
-# export PROMPT_COMMAND='__posh_git_ps1 "$PS1PREFIX" "$PS1SUFFIX";'
+if [ -f ~/git-prompt.sh ]; then
+    source ~/git-prompt.sh
+fi
 
-$PROMPT_COMMAND
+if typeset -f __git_ps1 > /dev/null; then
+    export PS1="${PS1PREFIX}$(__git_ps1 " (%s)")${PS1SUFFIX}"
+else
+    export PS1="${PS1PREFIX}${PS1SUFFIX}"
+fi
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -112,49 +118,43 @@ function fhash() {
 }
 
 function gitfa() {
-  original_dir="$PWD"
-  ignore_file="$original_dir/gfa.ignore"
+    original_dir="$PWD"
+    ignore_file="$original_dir/gfa.ignore"
 
-  echo $ignore_file
+    echo $ignore_file
 
-  if [ $# -eq 0 ];
-  then
-    git_command="git status"
-  else
-    git_command="git $@"
-  fi;
-
-  for i in $(ls .);
-  do
-    if [ -d $i ];
-    then
-
-      cd $i
-      dir_name="\033[1;34m$i\033[0m"
-      echo -e $dir_name
-
-      if [ -f $ignore_file ] && grep -Fxq $i $ignore_file
-      then
-        echo "In ignore list."
-        cd $original_dir
-        continue
-      #else
-      #  echo "No ignore file or not in list."
-      fi
-
-      if [ -d ".git" ];
-      then
-        if [ -f "CATKIN_IGNORE" ];
-        then
-          echo "CATKIN_IGNORE"
-        else
-          $git_command
-        fi;
-      else
-        echo "No git repository."
-      fi;
-
-      cd $original_dir
+    if [ $# -eq 0 ]; then
+        git_command="git status"
+    else
+        git_command="git $@"
     fi;
-  done
+
+    for i in $(ls .); do
+        if [ -d $i ]; then
+            cd $i
+            dir_name="\033[1;34m$i\033[0m"
+            echo -e $dir_name
+
+            if [ -f $ignore_file ] && grep -Fxq $i $ignore_file
+            then
+                echo "In ignore list."
+                cd $original_dir
+                continue
+            #else
+            #    echo "No ignore file or not in list."
+            fi
+
+            if [ -d ".git" ]; then
+                if [ -f "CATKIN_IGNORE" ]; then
+                    echo "CATKIN_IGNORE"
+                else
+                    $git_command
+                fi
+            else
+                echo "No git repository."
+            fi
+
+            cd $original_dir
+        fi
+    done
 }
