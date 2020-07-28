@@ -66,6 +66,7 @@ PS1PREFIX="${PS1T}\[\e[96m\]"
 PS1SUFFIX="\[\e[0;34m\]λ \[\e[0m\]"
 
 if [ -f ~/git-prompt.sh ]; then
+    source /etc/bash_completion.d/git-prompt
     source ~/git-prompt.sh
 fi
 
