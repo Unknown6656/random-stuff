@@ -4,6 +4,11 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
 
+# block the GitKraken auto-updater when GitCracken is in use ;)
+::0 api.gitkraken.com
+::0 gloapi.gitkraken.com
+
+
 # #################### ADOBE LICENCE BLOCKS #################### #
 
 ::0     192.150.14.69
