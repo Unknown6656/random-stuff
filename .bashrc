@@ -81,16 +81,6 @@ else
     export PS1="${PS1PREFIX}${PS1SUFFIX}"
 fi
 
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -103,23 +93,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias cls='clear'
-alias ll='ls -lah --group-directories-first'
-alias l='ls -CF'
-alias df='df -ah'
-alias cp='rsync -ahv --progress'
-alias rm='rm -i'
-alias apt-upgrade='apt clean; apt update; apt list --upgradable; apt dist-upgrade'
-alias gnome-restart='service gdm3 stop; service gdm3 start'
-# alias vlc-ascii='vlc --enable-caca --enable-aa'
-alias vlc-ascii='vlc -V caca'
-alias find-links='find . -type l -ls'
-alias explorer='nautilus'
-alias dump-tcp='tcpdump -s 0 -U -n -w - -i eno1 not port 22'
-alias python='python3'
-alias temp='vcgencmd measure_temp'
-alias git-graph='git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)" --all'
 
 function fhash() {
     pee crc32 md5sum sha1sum sha224sum sha256sum sha384sum sha512sum < "$1"
