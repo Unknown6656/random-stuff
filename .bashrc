@@ -93,6 +93,8 @@ if ! shopt -oq posix; then
     fi
 fi
 
+bind 'set completion-ignore-case on'
+
 
 function fhash() {
     pee crc32 md5sum sha1sum sha224sum sha256sum sha384sum sha512sum < "$1"
