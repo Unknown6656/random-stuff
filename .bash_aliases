@@ -32,7 +32,9 @@ alias git-graph='git log --graph --abbrev-commit --decorate --format=format:"%C(
 alias python='python3'
 alias d="docker compose"
 alias dk='docker stop $(docker ps -a -q)'
-alias dl="d logs --follow"
+alias dll="d logs --follow"
+alias dl="dll --since 0"
+alias de="d exec -it"
 alias dw="d down; docker system prune -f"
 alias db="d up --build"
 alias dp="d ps -a"
