@@ -45,7 +45,12 @@ else
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1T="${debian_chroot:+($debian_chroot)}\[\e[01;31m\]\u@\h\[\e[0m\]:\[\e[01;34m\]\w"
+    if [ "$(id -u)" -eq 0 ]; then
+        USERCOLOR="\[\e[01;31m\]"
+    else
+        USERCOLOR="\[\e[01;32m\]"
+    fi
+    PS1T="${debian_chroot:+($debian_chroot)}${USERCOLOR}\u@\h\[\e[0m\]:\[\e[01;34m\]\w"
     PS2="\e[33m\e[1m(continued)\e[m> "
 else
     PS1T="${debian_chroot:+($debian_chroot)}\u@\h:\w"
