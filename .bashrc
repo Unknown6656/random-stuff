@@ -68,20 +68,22 @@ unset color_prompt force_color_prompt
 
 PS1PREFIX="${PS1T}\[\e[96m\]"
 PS1SUFFIX="\[\e[0;34m\]λ \[\e[0m\]"
+GIT_PROMPT_SH="$HOME/git-prompt.sh"
 
-source /etc/bash_completion.d/git-prompt
+if [ ! -f "$GIT_PROMPT_SH" ]; then
+    curl -o "$GIT_PROMPT_SH" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+fi
 
-if [ -f ~/git-prompt.sh ]; then
-    . ~/git-prompt.sh
+. "$GIT_PROMPT_SH"
 
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWCOLORHINTS=1
-    export GIT_PS1_SHOWSTASHSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
-    export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="auto"
 
-    PROMPT_COMMAND='__posh_git_ps1 "'$PS1PREFIX'" "'$PS1SUFFIX'"'
-    $PROMPT_COMMAND
+if function_exists __git_ps1; then
+    PROMPT_COMMAND='__git_ps1 "'"$PS1PREFIX"'" "'"$PS1SUFFIX"'"'
 else
     export PS1="${PS1PREFIX}${PS1SUFFIX}"
 fi
@@ -146,3 +148,9 @@ function gitfa() {
         fi
     done
 }
+
+. "$HOME/.local/bin/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
