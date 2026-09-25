@@ -40,5 +40,6 @@ alias dup="docker compose up --no-recreate"
 alias db="docker compose up --build"
 alias dp="docker compose ps -a --format \"table {{.Name}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\""
 alias dbb="docker compose build"
+alais dr="docker compose restart"
 
 alias sshp="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
