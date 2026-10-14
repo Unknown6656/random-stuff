@@ -8,7 +8,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 if [ -x /usr/bin/eza ]; then
-    alias ls='eza -aalhHmU@F --color=auto --hyperlink --show-symlinks --group-directories-first --smart-group --git'
+    alias ls='eza -aalh@F --color=auto --hyperlink --show-symlinks --group-directories-first --smart-group --git'
     alias l='ls'
 else
     echo "(/usr/bin/eza not found, using default ls)"
