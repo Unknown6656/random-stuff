@@ -7,12 +7,32 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-if [ -x /usr/bin/eza ]; then
-    alias ls='eza -aalh@F --color=auto --hyperlink --show-symlinks --group-directories-first --smart-group --git'
+function install_eza() {
+    if [ ! -x /usr/local/bin/eza ]; then
+        TMPDIR=$(mktemp -d)
+        cd "$TMPDIR"
+
+        if curl -LO --max-time 15 https://github.com/eza-community/eza/releases/download/v0.23.5/eza_x86_64-unknown-linux-gnu.zip; then
+            unzip eza_x86_64-unknown-linux-gnu.zip
+            sudo mv eza /usr/local/bin/
+            chmod +x /usr/local/bin/eza
+        fi
+
+        rm eza_x86_64-unknown-linux-gnu.zip
+        cd - && rmdir "$TMPDIR"
+    fi
+
+    if [ -x /usr/local/bin/eza ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+if install_eza; then
+    alias ls='eza -aalh@F --color=auto --hyperlink --show-symlinks --group-directories-first --smart-group --git --time-style long-iso'
     alias l='ls'
 else
-    echo "(/usr/bin/eza not found, using default ls)"
-
     alias ls='/usr/bin/ls -hapL --file-type --color=auto --group-directories-first'
     alias l='ls -CF'
 fi
