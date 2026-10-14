@@ -13,8 +13,14 @@ function install_eza() {
         cd "$TMPDIR"
 
         if curl -LO --max-time 15 https://github.com/eza-community/eza/releases/download/v0.23.5/eza_x86_64-unknown-linux-gnu.zip; then
+            if ! which unzip >/dev/null 2>&1; then
+                sudo apt update && sudo apt install -y unzip
+            fi
+
             unzip eza_x86_64-unknown-linux-gnu.zip
-            sudo mv eza /usr/local/bin/
+            sudo mkdir -p /usr/local/bin/
+            sudo chown "$UID":"$UID" /usr/local/bin/
+            mv eza /usr/local/bin/eza
             chmod +x /usr/local/bin/eza
         fi
 
