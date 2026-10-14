@@ -1,6 +1,5 @@
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
     alias grep='grep --color=auto'
@@ -8,9 +7,18 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+if [ -x /usr/bin/eza ]; then
+    alias ls='eza -aalhHmU@F --color=auto --hyperlink --show-symlinks --group-directories-first --smart-group --git'
+    alias l='ls'
+else
+    echo "(/usr/bin/eza not found, using default ls)"
+
+    alias ls='/usr/bin/ls -hapL --file-type --color=auto --group-directories-first'
+    alias l='ls -CF'
+fi
+
+alias ll='ls -l'
 alias cls='clear'
-alias ll='ls -lah --group-directories-first'
-alias l='ls -CF'
 alias df='df -ah'
 alias cp='rsync -ahv --progress'
 alias rm='rm -i'
