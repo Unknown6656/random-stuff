@@ -1,5 +1,3 @@
-#!/bin/sh
-
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias dir='dir --color=auto'
@@ -50,6 +48,6 @@ alias dup="docker compose up --no-recreate"
 alias db="docker compose up --build"
 alias dp="docker compose ps -a --format \"table {{.Name}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\""
 alias dbb="docker compose build"
-alais dr="docker compose restart"
+alias dr="docker compose restart"
 
 alias sshp="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
